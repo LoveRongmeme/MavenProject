@@ -26,9 +26,13 @@ src
 
 如果项目中使用了别的项目的包，则需要在pom.xml中建立依赖，同时编译器还会在本地仓库中查找，如果找到了则会将目标jar包加入到项目的classPath中，如果没有找到，就会去网上的maven中央仓库查找并下载到本地仓库供其使用，若中央仓库也没有则会报错。(tips:按住shift右键你需要的路径可以直接进入命令窗口<br>
 坐标(groupId、artifactId、version这种类型):用来唯一标识构件
-* groupId 定义当前Maven项目属于哪个组||公司  一般反写公司名+项目名
-* artifactId 定义项目中模块的唯一标识 一般项目名-模块名
-* version 版本<br>
+* groupId 定义当前Maven项目属于哪个组||公司  也就是所属的实际项目  一般反写公司名+项目名 可以参考org.springframework
+* artifactId 定义实际项目中的Maven项目(模块)的唯一标识 一般项目名-模块名
+* version Maven项目当前所处的版本<br>
+* packaging 定义Maven项目的打包方式
+* classifier 帮助定义一些由插件生成的附属构件 不能直接定义项目的classifier，因为附属构件不是项目直接默认生成的，而是由附加的插件生成
+这5个元素,groupId,artifactId,version是必需的，packaging是可选的(默认为.jar),classifier<br>
+项目的构件名一般命名规则 artifactId-version[-classifier].packaging   [-classifier]表示可选
 中央镜像仓库:[Center]( https://repo.maven.apache.org/maven2 "repository")<br>
 国内镜像仓库网址:[ALi]( http://maven.aliyun.com/nexus/content/groups/public/ "repositoryInAli")<br>
 可以在settings.xml中修改<br>   
