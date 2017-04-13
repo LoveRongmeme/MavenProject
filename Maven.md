@@ -31,6 +31,7 @@ src
 * version Maven项目当前所处的版本<br>
 * packaging 定义Maven项目的打包方式
 * classifier 帮助定义一些由插件生成的附属构件 不能直接定义项目的classifier，因为附属构件不是项目直接默认生成的，而是由附加的插件生成
+
 这5个元素,groupId,artifactId,version是必需的，packaging是可选的(默认为.jar),classifier<br>
 项目的构件名一般命名规则 artifactId-version[-classifier].packaging   [-classifier]表示可选
 中央镜像仓库:[Center]( https://repo.maven.apache.org/maven2 "repository")<br>
