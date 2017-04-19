@@ -33,7 +33,7 @@ src
 * classifier 帮助定义一些由插件生成的附属构件 不能直接定义项目的classifier，因为附属构件不是项目直接默认生成的，而是由附加的插件生成
 
 这5个元素,groupId,artifactId,version是必需的，packaging是可选的(默认为.jar),classifier<br>
-项目的构件名一般命名规则 artifactId-version[-classifier].packaging   [-classifier]表示可选
+项目的构件名一般命名规则 artifactId-version[-classifier].packaging   [-classifier]表示可选<br>
 中央镜像仓库:[Center]( https://repo.maven.apache.org/maven2 "repository")<br>
 国内镜像仓库网址:[ALi]( http://maven.aliyun.com/nexus/content/groups/public/ "repositoryInAli")<br>
 可以在settings.xml中修改<br>   
@@ -54,6 +54,36 @@ src
 -Dversion=版本号
 -Dpackage=包名<br>
 这两种都是针对3.0及以上，若是2.0方法有不同，具体网上查<br>
+## 6.**依赖**
+基本配置
+```
+<project>
+...
+<dependencies>
+    <dependency>
+      <groupId>...</groupId>
+      <artifactId>...</artifactId>
+      <version>...</version>
+      <type>...</type>
+      <scope>...</scope>
+      <optional>...</optional>
+     <exclusions>
+      <exclusion>
+      ...
+      </exclusion>
+     ...
+     </exclusions>
+    </dependency>
+   ...
+</dependencies>
+...
+</project>
+```
+* **groupId、artifactId、version**：依赖的基本坐标
+* **type**:依赖的类型，对应于项目的packaging，一般不用声明，默认是jar
+* **scope**:依赖的范围
+* **optional**:标记依赖是否可选
+* **exclusions**:用来排除传递性依赖
 
 
 
