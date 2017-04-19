@@ -55,7 +55,7 @@ src
 -Dpackage=包名<br>
 这两种都是针对3.0及以上，若是2.0方法有不同，具体网上查<br>
 ## 6.**依赖**
-基本配置
+1).**基本配置**
 ```
 <project>
 ...
@@ -83,7 +83,25 @@ src
 * **type**:依赖的类型，对应于项目的packaging，一般不用声明，默认是jar
 * **scope**:依赖的范围
 * **optional**:标记依赖是否可选
-* **exclusions**:用来排除传递性依赖
+* **exclusions**:用来排除传递性依赖<br>
+
+2).**依赖范围**
+关于依赖范围，首先得明确Maven在编译项目主代码、编译和执行测试、实际运行的时候用的是不同的classpath，依赖范围就是用来控制依赖与这三种classpath（编译classpath、测试classpath、运行classpath）的关系，Maven有以下几种依赖范围:
+* **compile**:编译依赖范围，**默认的**，对于三种classpath都有效，典型代表spring-core，在编译、测试、运行都需要使用该依赖
+* **test**:测试依赖范围，只对测试classpath起作用，典型代表JUnit,在编译测试代码及运行测试的时候需要
+* **provided**:已提供依赖范围，对编译classpath和测试classpath有效，典型代表是servlet-api，编译和测试时需要，在运行时，由于容器已经提供，故不需要
+* **runtime**:运行时依赖，对于测试classpath和运行classpath有效，典型代表是JDBC驱动实现，项目主代码的编译只需要JDK提供的JDBC接口，只有在执行测试和运行项目时才需要实现上述JDBC接口的具体JDBC驱动
+* **system**:系统依赖范围，对编译classpath和测试classpath有效，使用时必须通过systemPath元素显示指定依赖文件路径，此类依赖不通过Maven仓库解析，且往往与本机系统绑定，可能造成构建的不可移植，慎用！systemPath元素可以引用系统环境变量，如:
+```
+<dependency>
+      <groupId>javax.sql</groupId>
+      <artifactId>jdbc-stdext</artifactId>
+      <version>2.0</version>
+      <scope>system</scope>
+      <systemPath>${JAVA_HOME}/lib/rt.jar</systemPath>
+</dependency>
+```
+* **import**:导入依赖范围，该依赖范围不会对三种classpath产生实际影响
 
 
 
