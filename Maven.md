@@ -121,9 +121,9 @@ Maven在使用依赖时会解析依赖的POM，会将必要的间接依赖通过
 ```
 在申明依赖时，可以用${springframework.version}来使用
 * 优化依赖:在Maven解析了所有的直接依赖和传递依赖之后，确保一个构件只有唯一的版本存在，称为已解析依赖，有如下三种命令来优化(主要删除一些没用依赖):
-    * mvn dependency:list查看所有的已解析依赖
-    * mvn dependency:tree查看依赖数，即依赖的层数(第几层依赖)
-    * mvn dependency:analyze 只会分析编译主代码和编译测试代码是所需的依赖，而不会分析执行测试和运行项目时所需的依赖
+    * mvn dependency:list查看所有的已解析依赖<br>
+    * mvn dependency:tree查看依赖数，即依赖的层数(第几层依赖)<br>
+    * mvn dependency:analyze 只会分析编译主代码和编译测试代码是所需的依赖，而不会分析执行测试和运行项目时所需的依赖<br>
 以上三种依赖依情况谨慎使用
 
 
