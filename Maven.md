@@ -101,7 +101,11 @@ src
       <systemPath>${JAVA_HOME}/lib/rt.jar</systemPath>
 </dependency>
 ```
-* **import**:导入依赖范围，该依赖范围不会对三种classpath产生实际影响
+* **import**:导入依赖范围，该依赖范围不会对三种classpath产生实际影响<br>
+3).**传递性依赖**<br>
+Maven在使用依赖时会解析依赖的POM，会将必要的间接依赖通过传递性依赖引入到当前项目中来；依赖范围会对传递性依赖产生影响;<br>
+比如，假设A依赖B,B依赖C，那么我们说A对于B是第一直接依赖，B对于C是第二直接依赖，A对于C是传递性依赖；<br>
+规律:当第二直接依赖范围是compile时，传递性依赖范围与第一直接依赖范围相同；当第二直接依赖范围是test时，依赖不会传递；当第二直接依赖范围是provided时，只传递第一直接依赖范围是provided的依赖，传递性依赖范围为provided；当第二直接依赖范围是runtime时，传递性依赖范围与第一直接依赖范围一致，但provided除外，此时传递性依赖范围为runtime;
 
 
 
