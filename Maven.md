@@ -136,9 +136,51 @@ Maven在使用依赖时会解析依赖的POM，会将必要的间接依赖通过
 
 >>其它公共库
 
-**快照版本**：*-SNAPSHOT:(供组织内部使用的)不稳定版本，为了当构件更新时保证其他构件对其依赖也是最新的而规定的<br>
-**从仓库解析依赖的机制**
-
+**快照版本**：\*-SNAPSHOT:(供组织内部使用的)不稳定版本，为了当构件更新时保证其他构件对其依赖也是最新的而规定的<br>
+**从仓库解析依赖的机制**:根据依赖groupId,artifactId,version...先在本地仓库匹配，有则解析，没有则去远程仓库匹配，有则解析，没有就报错<br>
+**镜像**:如果仓库X可以提供仓库Y储存的所有内容，则可以认为X是Y的一个镜像，也就是说任何一个可以从仓库Y中得到的构件，都可以从它的镜像中获得<br>
+settings.xml中配置
+```
+<settings>
+...
+<mirrors>
+    <mirror>
+    <id>maven.cn.net</id>
+    <name>one of the central mirrors in China</name>
+    <url>http://maven.aliyun.com/nexus/content/groups/public/<url>
+    <mirrorOf>central</mirrorOf>
+    </morror>
+<mirrors>
+...
+</settings>
+```
+其中mirrorOf表示的目标仓库的镜像，可以用这种方法配置其它远程仓库的镜像；关于镜像的更常用方法是结合私服，由于私服可以代理所有的远程仓库，所以私服是所有远程仓库的镜像，因此可以配置这样的一个镜像:
+```
+<settings>
+...
+<mirrors>
+    <mirror>
+    <id>internal-repository</id>
+    <name>Internal Repository Manager</name>
+    <url>http://192.168.1.100/maven2/<url>
+    <mirrorOf>*</mirrorOf>
+    </morror>
+<mirrors>
+...
+</settings>
+```
+其中mirrorOf的值为\*，表示该配置是所有Maven仓库的镜像；Maven更高级的镜像配置(mirrorOf):<br>
+* \* 匹配所有远程仓库
+* external:\* 匹配所有远程仓库,使用localhost的除外，使用file:// 协议的也除外,也就是说，匹配所有不在本机上的远程仓库
+* repo1,repo2 使用逗号分隔的多个远程仓库
+* \*,! repo1 匹配所有除了repo1的远程仓库
+值得注意的是，当镜像仓库出了问题时，也不能绕过它而访问被镜像仓库，因而无法下载构件<br>
+## **仓库搜索**
+几个常用的寻找Maven依赖的网站:
+* Sonatype Nexus: http://repository.sonatype.org/
+* Jarvana: http://www.jarnava.com/jarvana/
+* mvnbrowser: http://www.mvnborwser.com
+* MVNrepository: http://mvnrepository.com/
 
 
 
