@@ -186,24 +186,25 @@ maven生命周期是一个抽象概念，具体的每一部分都由相应的插
 maven有**三套**生命周期，分别是clean,default,site;clean-清理项目，default-构建项目，site-建立项目站点;每个生命周期都由一些阶段，后面的阶段依赖前面的阶段，按一定顺序执行；**每个生命周期相互独立**<br>
 * clean-清理项目<br>
     * pre-clean 执行一些清理前需要完成的工作<br>
-    * clean 清理上一次构建生成的文件<br>
-    * post-clean 执行一些清理后需要完成的工作<br>
+    * clean 清理上一次构建生成的文件<br>
+    * post-clean 执行一些清理后需要完成的工作<br>
 * default-构建项目,定义了构建时所需要的所有步骤，以下只对重点阶段分立及解释<br>
-    * validate,initialize,generate-sources<br>
-    * process-sources 处理项目主资源文件，通常是对src/main/resources目录内的内容进行变量替换，完成后复制到输出的classpath中<br>
-    * generate-resources.process-resources<br>
-    * compile 编译主代码，通常是把src/main/java中的内容编译到主classpath(编译classpath)中<br>
+    * validate,initialize,generate-sources<br>
+    * process-sources 处理项目主资源文件，通常是对src/main/resources目录内的内容进行变量替换，完成后复制到输出的classpath中<br>
+    * generate-resources.process-resources<br>
+    * compile 编译主代码，通常是把src/main/java中的内容编译到主classpath(编译classpath)中<br>
     * process-classes,generate-test-sources<br>
-    * process-test-sources 处理项目测试资源文件，通常是对src/test/resources目录内的内容进行变量替换，完成后复制到输出的测试lasspath中<br>
+    * process-test-sources 处理项目测试资源文件，通常是对src/test/resources目录内的内容进行变量替换，完成后复制到输出的测试lasspath中<br>
     * generate-test-resources,process-test-resources<br>
-    * test-compile 编译项目测试代码，通常是把src/test/java中的内容编译到测试classpath中<br>
-    * process-test-classes<br>
-    * test 使用单元测试框架运行测试，测试代码不会被打包和部署<br>
-    * prepare-package<br>
+    * test-compile 编译项目测试代码，通常是把src/test/java中的内容编译到测试classpath中<br>
+    * process-test-classes<br>
+    * test 使用单元测试框架运行测试，测试代码不会被打包和部署<br>
+    * prepare-package<br>
     * package 接受编译好的代码，打包成可发布的格式，如jar<br>
-    * pre-integration-test,integration-test,post-integration-test,verify,<br>
+    * pre-integration-test,integration-test,post-integration-test,verify,<br>
     * install 将包安装到本地仓库，供其他maven项目使用<br>
     * deploy 将最终的包部署到远程仓库，供其他开发人员和maven项目使用<br>
+    
 * site-建立和发布项目站点(基于POM的信息)<br>
     * pre-site执行一些在生成项目站点前必须完成的工作<br>
     * site 生成项目站点文档<br>
