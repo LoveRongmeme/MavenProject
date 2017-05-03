@@ -181,8 +181,39 @@ settings.xml中配置
 * Jarvana: http://www.jarnava.com/jarvana/
 * mvnbrowser: http://www.mvnborwser.com
 * MVNrepository: http://mvnrepository.com/
-
-
+## 8.**生命周期**
+maven生命周期是一个抽象概念，具体的每一部分都由相应的插件来完成，(与Java的模板方法很像);生命周期包括清理、初始化、编译、测试、打包、集成测试、验证、部署、站点生成等；<br>
+maven有**三套**生命周期，分别是clean,default,site;clean-清理项目，default-构建项目，site-建立项目站点;每个生命周期都由一些阶段，后面的阶段依赖前面的阶段，按一定顺序执行；**每个生命周期相互独立**<br>
+* clean-清理项目
+    * pre-clean 执行一些清理前需要完成的工作
+    * clean 清理上一次构建生成的文件
+    * post-clean 执行一些清理后需要完成的工作
+* default-构建项目,定义了构建时所需要的所有步骤，以下只对重点阶段分立及解释
+    * validate,initialize,generate-sources
+    * process-sources 处理项目主资源文件，通常是对src/main/resources目录内的内容进行变量替换，完成后复制到输出的classpath中
+    * generate-resources.process-resources
+    * compile 编译主代码，通常是把src/main/java中的内容编译到主classpath(编译classpath)中
+    * process-classes,generate-test-sources
+    * process-test-sources 处理项目测试资源文件，通常是对src/test/resources目录内的内容进行变量替换，完成后复制到输出的测试lasspath中
+    * generate-test-resources,process-test-resources
+    * test-compile 编译项目测试代码，通常是把src/test/java中的内容编译到测试classpath中
+    * process-test-classes
+    * test 使用单元测试框架运行测试，测试代码不会被打包和部署
+    * prepare-package
+    * package 接受编译好的代码，打包成可发布的格式，如jar
+    * pre-integration-test,integration-test,post-integration-test,verify,
+    * install 将包安装到本地仓库，供其他maven项目使用
+    * deploy 将最终的包部署到远程仓库，供其他开发人员和maven项目使用
+* site-建立和发布项目站点(基于POM的信息)
+    * pre-site执行一些在生成项目站点前必须完成的工作
+    * site 生成项目站点文档
+    * post-site 执行一些在生成项目站点之后需要完成的工作
+    * site-deploy 将生成的项目站点发布到服务器上
+**命令行与生命周期**：从命令行执行任务最主要的方式就是调用Maven的生命周期阶段，一些例子：
+* mvn clean 调用clean生命周期的clean阶段，实际执行的是pre-clean和clean 
+* mvn test 调用default生命周期的test阶段，实际执行的是validate,initialize等,直到test的所有阶段，这也就解释了为什么在执行测试的时候，项目的代码能够自动得以编译
+* maven clean install 调用clean生命周期的clean阶段和default生命周期的install阶段，实际执行的是clean的pre-clean，clean和default的从validate到install的所有阶段，再执行真正的项目构建之前先清理比较好
+* maven clean deploy site-depoly 调用clean的clean，default的deploay以及site的site-deploy阶段，实际执行的是clean的pre-clean，clean和default的的所有阶段以及site的所有阶段
 
 
 
